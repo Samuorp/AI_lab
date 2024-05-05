@@ -1,0 +1,63 @@
+class FoodOrderingChatbot:
+    def __init__(self):
+        self.menu = {
+            "burger": 5,
+            "pizza": 8,
+            "fries": 3,
+            "drink": 2
+        }
+        self.cart = {}
+
+    def show_menu(self):
+        print("Menu:")
+        for item, price in self.menu.items():
+            print(f"{item.capitalize()}: ${price}")
+
+    def add_to_cart(self, item, quantity):
+        if item in self.menu:
+            if item in self.cart:
+                self.cart[item] += quantity
+            else:
+                self.cart[item] = quantity
+            print(f"Added {quantity} {item}(s) to your cart.")
+        else:
+            print("Sorry, that item is not available.")
+
+    def view_cart(self):
+        print("Your Cart:")
+        total = 0
+        for item, quantity in self.cart.items():
+            price = self.menu[item]
+            item_total = price * quantity
+            print(f"{item.capitalize()}: {quantity} x ${price} = ${item_total}")
+            total += item_total
+        print(f"Total: ${total}")
+
+    def clear_cart(self):
+        self.cart = {}
+        print("Your cart has been cleared.")
+
+# Instantiate the chatbot
+chatbot = FoodOrderingChatbot()
+
+# Sample interaction
+print("Welcome to FoodBot! How can I assist you today?")
+while True:
+    print("\n1. Show Menu\n2. Add to Cart\n3. View Cart\n4. Clear Cart\n5. Exit")
+    choice = input("Enter your choice: ")
+
+    if choice == '1':
+        chatbot.show_menu()
+    elif choice == '2':
+        item = input("Enter the item you want to add to your cart: ").lower()
+        quantity = int(input("Enter the quantity: "))
+        chatbot.add_to_cart(item, quantity)
+    elif choice == '3':
+        chatbot.view_cart()
+    elif choice == '4':
+        chatbot.clear_cart()
+    elif choice == '5':
+        print("Thank you for using FoodBot. Have a great day!")
+        break
+    else:
+        print("Invalid choice. Please try again.")
